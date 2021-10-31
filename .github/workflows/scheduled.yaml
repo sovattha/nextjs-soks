@@ -1,12 +1,12 @@
-name: every-minute-cron-job
+name: every-5-minutes-cron-job
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: every-minute-cron-job
+      - name: every-5-minutes-cron-job
         run: |
           curl --request POST \
           --url 'https://nextjs-soks.vercel.app/api/example' \

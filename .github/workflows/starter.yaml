@@ -32,3 +32,9 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: Test the target URL
+        run: |
+          curl --request POST \
+          --url 'https://nextjs-soks.vercel.app/api/example' \
+          --header 'Authorization: Bearer ${{ secrets.ACTION_KEY }}'
