@@ -1,7 +1,7 @@
 name: every-minute-cron-job
 on:
   schedule:
-    - cron: '* */60 * * *'
+    - cron: '* * * * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
