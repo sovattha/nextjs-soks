@@ -1,0 +1,13 @@
+name: every-minute-cron-job
+on:
+  schedule:
+    - cron: '* */60 * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: every-minute-cron-job
+        run: |
+          curl --request POST \
+          --url 'https://nextjs-soks.vercel.app/api/example' \
+          --header 'Authorization: Bearer ${{ secrets.ACTION_KEY }}'

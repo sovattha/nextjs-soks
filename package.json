@@ -1,5 +1,5 @@
 {
-  "name": "soks",
+  "name": "nextjs-soks",
   "private": true,
   "scripts": {
     "dev": "next dev",
