@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-soks",
+  "name": "nextjs-gateio-authenticator",
   "private": true,
   "scripts": {
     "dev": "next dev",

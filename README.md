@@ -1,34 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gate.io API authenticator for Next.js
 
-## Getting Started
+This is an alternative to the Gate.io API for NodeJS https://github.com/gateio/gateapi-nodejs
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
+1. Rename `env.example` to `.env` and fill in your key and secret
+2. `yarn`
+3. `yarn dev`
+
+## How to use
+
+### 1. Call the endpoint /api/gate
+
+For example:
+http://localhost:3000/api/gate?method=GET&url=/wallet/deposits
+
+You will get a response like:
+
+```
+{
+    "KEY": "<your key>",
+    "Timestamp": 1635807198.638,
+    "SIGN": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "method": "GET",
+    "prefix": "/api/v4",
+    "url": "/wallet/deposits",
+    "query_param": "",
+    "body": ""
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Use the values in a separate request to Gate.io API
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+For example:
+https://api.gateio.ws/api/v4/wallet/deposits
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+with the header values filled in from the previous request:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- `KEY`
+- `Timestamp`
+- `SIGN`
 
-## Learn More
+```
+GET /api/v4/wallet/deposits HTTP/1.1
+Host: api.gateio.ws
+KEY: <your key>
+Timestamp: 1635807198.638
+SIGN: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Cookie: login_notice_check=%2F
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. For POST requests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Pass the body as a string, like so:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+http://localhost:3000/api/gate?method=POST&url=/spot/orders&body={"text":"t-123456","currency_pair":"ETH_BTC","type":"limit","account":"spot","side":"buy","iceberg":"0","amount":"1","price":"5.00032","time_in_force":"gtc","auto_borrow":false}
