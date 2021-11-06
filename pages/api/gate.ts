@@ -35,12 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 /**
  * Return a signature object to be used in the header of a request to Gate.io
  */
-function genSign(
-  method: string,
-  url: string,
-  queryString?: string,
-  payloadString?: string
-) {
+function genSign(method: string, url: string, queryString?: string, payloadString?: string) {
   const key = process.env.KEY;
   const secret = process.env.SECRET as string;
   const t = new Date().getTime() / 1000;
@@ -48,11 +43,7 @@ function genSign(
   m.update(payloadString || '').setEncoding('utf-8');
   const hashedPayload = m.digest('hex');
   const s = `${method}\n${url}\n${queryString || ''}\n${hashedPayload}\n${t}`;
-  const sign = crypto
-    .createHmac('sha512', secret)
-    .update(s)
-    .setEncoding('utf-8')
-    .digest('hex');
+  const sign = crypto.createHmac('sha512', secret).update(s).setEncoding('utf-8').digest('hex');
   return {
     KEY: key,
     Timestamp: t,
